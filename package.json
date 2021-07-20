@@ -1,8 +1,12 @@
 {
-  "name": "@bim-libs/bim-swap-core",
+  "name": "bim-swap-core",
   "description": "Core contracts for the bim protocol",
-  "version": "0.1.0",
-  "homepage": "",
+  "version": "0.1.1",
+  "homepage": "https://github.com/muraz/bim-swap-core#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muraz/bim-swap-core.git"
+  },
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
   },
@@ -43,5 +47,18 @@
     "truffle": "^5.1.41",
     "truffle-flattener": "^1.4.4",
     "truffle-hdwallet-provider": "^1.0.17"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/muraz/bim-swap-core/issues"
+  },
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "bim",
+    "swap",
+    "core"
+  ],
+  "author": "Muraz"
 }
