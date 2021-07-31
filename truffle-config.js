@@ -1,6 +1,10 @@
-const HDWalletProvider = require('@truffle/hdwallet-provider');
-const fs = require('fs');
-const mnemonic = fs.readFileSync(".secret").toString().trim();
+const HDWalletProvider = require('truffle-hdwallet-provider');
+
+require('dotenv').config();
+
+const BSC_DEPLOYER_KEY = process.env.BSC_DEPLOYER_KEY;
+const BSC_TESTNET_DEPLOYER_KEY = process.env.BSC_TESTNET_DEPLOYER_KEY;
+const BSCSCAN_API_KEY=process.env.BSCSCAN_API_KEY;
 
 module.exports = {
   networks: {
@@ -10,19 +14,27 @@ module.exports = {
       network_id: "*",       // Any network (default: none)
     },
     testnet: {
-      provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s1.binance.org:8545`),
+      provider: () => new HDWalletProvider(BSC_TESTNET_DEPLOYER_KEY, `https://data-seed-prebsc-1-s1.binance.org:8545`),
       network_id: 97,
       confirmations: 10,
       timeoutBlocks: 200,
       skipDryRun: true
     },
     bsc: {
-      provider: () => new HDWalletProvider(mnemonic, `https://bsc-dataseed1.binance.org`),
+      provider: () => new HDWalletProvider(BSC_DEPLOYER_KEY, `https://bsc-dataseed1.binance.org`),
       network_id: 56,
       confirmations: 10,
       timeoutBlocks: 200,
       skipDryRun: true
     },
+  },
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  
+  api_keys: {
+    // Add BSCSCAN_API_KEY in .env file to verify contracts deployed through truffle
+    bscscan: BSCSCAN_API_KEY
   },
 
   // Set default mocha options here, use special reporters etc.
@@ -33,7 +45,31 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.5.16", // A version or constraint - Ex. "^0.5.0"
-    }
+      //https://forum.openzeppelin.com/t/how-to-deploy-uniswapv2-on-ganache/3885
+      version: "0.5.16",    // Fetch exact version from solc-bin (default: truffle's version)
+      // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
+      settings: {          // See the solidity docs for advice about optimization and evmVersion
+      optimizer: {
+        enabled: true,
+        runs: 999999
+      },
+      evmVersion: "istanbul", 
+      outputSelection: {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "evm.bytecode.object",
+            "evm.deployedBytecode.object",
+            "abi",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.sourceMap",
+            "metadata"
+          ]
+        },
+      }
+      }
+    },
   }
 }

@@ -27,7 +27,7 @@
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
     "solc": "0.5.16",
-    "truffle-plugin-verify": "^0.4.0",
+    "truffle-plugin-verify": "^0.5.7",
     "ts-node": "^8.5.4",
     "typescript": "^3.7.3"
   },
@@ -39,10 +39,15 @@
     "compile": "waffle .waffle.json",
     "pretest": "yarn compile",
     "test": "mocha",
+    "compile:truffle": "truffle compile",
+    "migrate:testnet": "truffle migrate --network testnet",
+    "migrate:dev": "truffle migrate --reset --network development",
+    "flatten": "truffle-flattener ./contracts/BimFactory.sol --output ./contracts-flattened-remix/BimFactory.sol",
     "prepublishOnly": "yarn test"
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "truffle": "^5.1.41",
     "truffle-flattener": "^1.4.4",
     "truffle-hdwallet-provider": "^1.0.17"

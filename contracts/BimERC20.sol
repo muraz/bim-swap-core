@@ -7,7 +7,7 @@ contract BimERC20 is IBimERC20 {
     using SafeMath for uint;
 
     string public constant name = 'Bim LPs';
-    string public constant symbol = 'Cake-LP';
+    string public constant symbol = 'Bim-LP';
     uint8 public constant decimals = 18;
     uint  public totalSupply;
     mapping(address => uint) public balanceOf;
